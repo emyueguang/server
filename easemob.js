@@ -16,8 +16,8 @@ let FormData = require('form-data');
 let fetch = require('node-fetch');
 
 let token='TOKEN';
-let client_id = 'CLIENT_ID';
-let client_secret = 'CLIENT_SECRET';
+let client_id = 'YXA6we1L4BENEeaMBX8oRVFQQg';
+let client_secret = 'YXA66hjBSnP8E9_SBvrPv_qm4QoSDwk';
 
 //通用http请求函数
 /*
@@ -28,7 +28,7 @@ let client_secret = 'CLIENT_SECRET';
 	json.callback: 回调函数
 */
 let http_request = function (json) {
-	let json = json || {};
+	json = json || {};
     json.data = json.data || {};
     json.method = json.method || 'GET';
 	json.headers = json.headers || {};
@@ -40,7 +40,7 @@ let http_request = function (json) {
     //请求参数
     let options = {
         host: 'a1.easemob.com',
-        path: '/org_name/app_name' + json.path,
+        path: '/emyueguang/jianglin' + json.path,
         method: json.method,
         headers:json.headers
     };
@@ -76,7 +76,7 @@ let http_request = function (json) {
 
 
 //获取token
-function getToken(callback) {
+function getToken(id, secret, callback) {	
     let data = {grant_type: 'client_credentials', client_id: client_id, client_secret: client_secret};
 	http_request({
 		data:data,
@@ -84,12 +84,12 @@ function getToken(callback) {
 		method:'POST',
 		callback:function (data) {
 			let d=JSON.parse(data);
-			let token = d.access_token;
+			console.log(d)
+			token = d.access_token;
 			//console.log(data);
 			//传进来的函数用来接数据
 			if(typeof callback == 'function')
-				callback(token);
-			
+				callback(token);			
 		}	
 	});
 	
@@ -363,7 +363,7 @@ function disconnectUser(username,callback){
 	
 */
 function sendText(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		target_type:json.type,
 		target:json.target,
@@ -395,7 +395,7 @@ function sendText(json){
 	
 */
 function sendImage(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		target_type:json.type,
 		target:json.target,
@@ -428,7 +428,7 @@ function sendImage(json){
 	
 */
 function sendAudio(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		target_type:json.type,
 		target:json.target,
@@ -464,7 +464,7 @@ function sendAudio(json){
 	
 */
 function sendVedio(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		target_type:json.type,
 		target:json.target,
@@ -494,7 +494,7 @@ function sendVedio(json){
 	
 */
 function sendCmd(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		target_type:json.type,
 		target:json.target,
@@ -517,7 +517,7 @@ function sendCmd(json){
 
 //获取所有群组
 function getGroups(json){
-	let json=json||{};
+	json=json||{};
 	json.limit=json.limit || 0;
 	http_request({
 		path:'/chatgroups?limit='+json.limit,
@@ -551,7 +551,7 @@ function getGroupDetail(group_ids,callback){
 	json.callback: 回调
 */
 function createGroup(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		groupname:json.groupname,	
 		desc:json.desc,
@@ -580,7 +580,7 @@ function createGroup(json){
 	json.callback:
 */
 function modifyGroupInfo(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		groupname:json.groupname,
 		description:json.description,
@@ -684,7 +684,7 @@ function getGroupsForUser(username,callback){
 	json.callback:
 */
 function changeGroupOwner(json){
-	let json = json || {};
+	json = json || {};
 	let data={
 		newowner:json.newowner,
 	};
@@ -762,7 +762,7 @@ function uploadFile(json){
 	json.callback:	
 */
 function downloadFile(json){
-	let json = json || {};
+	json = json || {};
 	http_request({
 		path:'/chatfiles/'+json.uuid,
 		method:'GET',
@@ -780,7 +780,7 @@ function downloadFile(json){
 	json.callback:	
 */
 function downloadThumbnail(json){
-	let json = json || {};
+	json = json || {};
 	http_request({
 		path:'/chatfiles/'+json.uuid,
 		method:'GET',
