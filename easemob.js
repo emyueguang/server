@@ -15,9 +15,9 @@ let fs= require('fs');
 let FormData = require('form-data');
 let fetch = require('node-fetch');
 
-let token='emyueguang#jianglin';
-let client_id = 'YXA6we1L4BENEeaMBX8oRVFQQg';
-let client_secret = 'YXA66hjBSnP8E9_SBvrPv_qm4QoSDwk';
+let token='TOKEN';
+let client_id = 'CLIENT_ID';
+let client_secret = 'CLIENT_SECRET';
 
 //通用http请求函数
 /*
