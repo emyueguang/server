@@ -9,6 +9,8 @@ let path = require("path")
 let querystring = require("querystring")
 
 let easemob = require('./easemob');
+let user = require('./user')
+let chat = require('./chat')
 
 let config = {
 	ip:"127.0.0.1",
@@ -44,19 +46,43 @@ function process_request(request, response){
 
 	request.on("end", function(){
 		data = querystring.parse(data);
-		console.log(data);
-		response.end("收到你的数据了");
-		process_data(data);		
+		console.log(data);		
+		process_data(data);
 	});
 
 	function process_data(data){
-		if (path === "/chattxt"){
+
+		switch(path){
+			case "/user/regist": 
+			user.regist_user(data.cellphone, data.code, data.pwd, function(data){
+				console.log(data);
+				response.end(data);
+			});
+			break;
+
+			case "/user/loginpwd":
+			user.login_with_pwd(data, function(data){
+
+			});
+			break;
+
+			case "/user/logincode":
+			user.login_with_code(data, function(data){
+
+			});
+			break;
+
+			case "/ptop/chattext":
 			console.log(data);
 			easemob.sendText({
-			type:'users',
-			from:data.from,
-			target:data.target.split(","),
-			content:data.content});
+				type:'users',
+				from:data.from,
+				target:data.target.split(","),
+				content:data.content});
+			break;
+
+			default:
+			response.end("未找到对应页面");
 		}
 	}
 }
